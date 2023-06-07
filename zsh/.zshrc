@@ -98,7 +98,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # zsh-autocomplete set shift-tab to partial complete words
-bindkey '^{{Z' forward-word
+bindkey '^[[Z' forward-word
 
 # export MANPATH="/usr/local/man:$MANPATH"
 

@@ -2,13 +2,17 @@
 #
 # bootstrap installs things.
 
-cd "$(dirname "$0")/.."
+# Get admin access to install the programs
+[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+
+cd "$(dirname "$0")"
 DOTFILES_ROOT=$(pwd -P)
 
 set -e
 
 echo ''
 
+## COLOUR PRINTING FUNCTIONS ##
 info () {
   printf "\r  [ \033[00;34m..\033[0m ] $1\n"
 }
@@ -27,6 +31,7 @@ fail () {
   exit
 }
 
+## Create the git/gitconfig.local.symlink file to setup your git profile
 setup_gitconfig () {
   if ! [ -f git/gitconfig.local.symlink ]
   then
@@ -49,7 +54,18 @@ setup_gitconfig () {
   fi
 }
 
+install_programs() {
+  # find the installers and run them iteratively
+  info "Run installers"
+  find -H "$DOTFILES_ROOT" -name install.sh | while read installer ; do sh -c "${installer}" ; done
 
+  for installer in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'install.sh')
+  do
+    ($installer && success "$(dirname "$installer") Installed ") || fail "$(dirname "$installer") NOT Installed ")
+  done
+}
+
+## Symlink config files with user prompts to confirm what action to take
 link_file () {
   local src=$1 dst=$2
 
@@ -125,32 +141,38 @@ link_file () {
   fi
 }
 
+## For every directory in the dotfile directory, link all .symlink config files to a folder
+## in $HOME that has the same name with a leading period
+## eg. dotfiles/vscode/settings.json.symlink ---> ~/.vscode/settings.json 
 install_dotfiles () {
-  info 'installing dotfiles'
+  info 'Applying my dotfiles'
 
   local overwrite_all=false backup_all=false skip_all=false
 
   for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
   do
-    dst="$HOME/.$(basename "${src%.*}")"
+    configdir="$(dirname "$src")"
+    if [ -f ""$configdir"/symlink.dir" ]
+    then
+      read -r custom_dst < ""$configdir"/symlink.dir"
+      eval custom_dst="$custom_dst" #expand variables such as $HOME
+
+      if [ -d "$custom_dst" ]
+      then
+        dst=$custom_dst
+      else
+        fail "Directory listed in "$configdir"/symlink.dir ("$custom_dst") doesn't exist" && exit 1 # The directory in symlink.dir should exist, check install process if break
+      fi
+    else
+      dst="$HOME/.$(basename "${src%.*}")"
+    fi
     link_file "$src" "$dst"
   done
 }
 
 setup_gitconfig
+install_programs
 install_dotfiles
-
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
-then
-  info "installing dependencies"
-  if source bin/dot | while read -r data; do info "$data"; done
-  then
-    success "dependencies installed"
-  else
-    fail "error installing dependencies"
-  fi
-fi
 
 echo ''
 echo '  All installed!'
