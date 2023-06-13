@@ -102,6 +102,11 @@ bindkey '^[[Z' forward-word
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+# Folders that we can `c [tab]` to
+# See functions/c
+export WORK=~/work
+export PERSONAL=~/me
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 

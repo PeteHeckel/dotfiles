@@ -1,0 +1,24 @@
+#!/bin/zsh
+#
+# This lets you quickly jump into a project directory.
+#
+# Type:
+#
+#   c <tab>
+#
+# ...to autocomplete on all of your projects in the directories specified in
+# `functions/_c`. Typically I'm using it like:
+#
+#    c holm<tab>/bo<tab>
+#
+# ...to quickly jump into holman/boom, for example.
+
+if [[ -d "$PERSONAL/$1" ]] then
+    cd "$PROJECTS/$1"
+
+elif [[ -d "$WORK/$1"]] then
+    cd "$WORK/$1"
+
+elif [[ -d "$LOCAL_REPOS/$1"]] then
+    cd "$LOCAL_REPOS/$1"
+fi
