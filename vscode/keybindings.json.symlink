@@ -317,4 +317,8 @@
         "command": "workbench.action.terminal.focus",
         "when": "panelFocus && !terminalFocus"
     },
+    {
+        "key": "ctrl+k shift+right",
+        "command": "workbench.action.splitEditorToNextGroup"
+    },
 ]

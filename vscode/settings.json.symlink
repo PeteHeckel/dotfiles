@@ -7,7 +7,6 @@
     "outline.showConstants": false,
     "outline.showEnumMembers": false,
     "outline.showEnums": false,
-    "outline.showVariables": false,
     "remote.autoForwardPorts": false,
     "comments.useRelativeTime": false,
     "C_Cpp.doxygen.generatedStyle": "/**",
@@ -47,7 +46,6 @@
     "breadcrumbs.showPackages": false,
     "breadcrumbs.showTypeParameters": false,
     "breadcrumbs.showVariables": false,
-    "window.zoomLevel": -1,
     "window.menuBarVisibility": "toggle",
     "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
     "workbench.colorTheme": "Default Dark+",
@@ -55,4 +53,7 @@
     "zenMode.restore": false,
     "window.customMenuBarAltFocus": false,
     "window.title": "${rootName}",
+    "zenMode.hideTabs": false,
+    "jupyter.askForKernelRestart": false,
+    "window.zoomLevel": -1,
 }
