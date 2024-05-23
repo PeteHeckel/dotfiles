@@ -1,4 +1,0 @@
-# Wrapper function for task project:xxx 
-tp () {
-    task project:$@
-}
