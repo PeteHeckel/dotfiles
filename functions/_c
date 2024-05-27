@@ -1,6 +1,4 @@
 #compdef c
-_files -W $WORK -/
-_files -W $PERSONAL -/
 _files -W $LOCAL_REPOS -/
 
 # See further documentation in `functions/c`.

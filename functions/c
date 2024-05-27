@@ -13,12 +13,4 @@
 #
 # ...to quickly jump into holman/boom, for example.
 
-if [[ -d "$PERSONAL/$1" ]] then
-    cd "$PROJECTS/$1"
-
-elif [[ -d "$WORK/$1"]] then
-    cd "$WORK/$1"
-
-elif [[ -d "$LOCAL_REPOS/$1"]] then
-    cd "$LOCAL_REPOS/$1"
-fi
+cd "$LOCAL_REPOS/$1"
