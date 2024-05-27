@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+# find the installers and run them iteratively
+info "Run installers"
+find -H "$DOTFILES_ROOT" -name install.sh | while read installer ; do sh -c "${installer}" ; done
+
+for installer in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'install.sh')
+do
+  ($installer && success "$(dirname "$installer") Installed ") || fail "$(dirname "$installer") NOT Installed "
+done
+

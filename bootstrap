@@ -38,6 +38,8 @@ setup_gitconfig () {
     info 'setup gitconfig'
 
     git_credential='cache'
+
+    ## MacOS ##
     if [ "$(uname -s)" == "Darwin" ]
     then
       git_credential='osxkeychain'
@@ -52,17 +54,6 @@ setup_gitconfig () {
 
     success 'gitconfig'
   fi
-}
-
-install_programs() {
-  # find the installers and run them iteratively
-  info "Run installers"
-  find -H "$DOTFILES_ROOT" -name install.sh | while read installer ; do sh -c "${installer}" ; done
-
-  for installer in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name 'install.sh')
-  do
-    ($installer && success "$(dirname "$installer") Installed ") || fail "$(dirname "$installer") NOT Installed ")
-  done
 }
 
 ## Symlink config files with user prompts to confirm what action to take
@@ -171,7 +162,6 @@ install_dotfiles () {
 }
 
 setup_gitconfig
-install_programs
 install_dotfiles
 
 echo ''
