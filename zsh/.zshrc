@@ -2,33 +2,21 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/pheckel/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-export PATH=/home/pheckel/work/tools:$PATH
-export PATH=/home/pheckel/work/tools/terminalSerialRead:$PATH
-export PATH=/home/pheckel/.cargo/bin:$PATH
-export PATH=/home/pheckel/Programs/stm32cubeprogrammer/bin:$PATH
-export PATH=/snap/bin:$PATH
-export PATH=/home/pheckel/Programs/SimplicityStudio_v4/developer/toolchains/gnu_arm/7.2_2017q4/bin:$PATH
-
-export UNCRUSTIFY_CONFIG=/usr/local/etc/uncrustifyrc
+# Define project folder so we can `c [tab]` to it
+export LOCAL_REPOS=$HOME/repos
 
 #Aliases
-alias chrome=google-chrome
-alias tools='cd ~/work/tools/'
-alias mqtt='cd ~/work/tools/devscripts/mqtt'
-alias bluetooth='/etc/init.d/bluetooth'
-alias code='GTK_IM_MODULE=xim code'
+# This was required to fixed a weird input error on xubuntu 20LTS
+# alias code='GTK_IM_MODULE=xim code'
 
-
-fpath+=$HOME/.zsh/pure
+# Theme
+fpath+=$ZSH/custom/themes/pure
 setopt nonomatch
 autoload -U promptinit; promptinit
 prompt pure
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+
 ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
@@ -91,43 +79,27 @@ ZSH_THEME=""
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-completions zsh-syntax-highlighting history-substring-search)
+plugins=(
+        # oh-my-zsh standard plugins
+        git 
+        sublime
+        sublime-merge
+        history-substring-search
+        # custom plugins
+        zsh-autosuggestions
+        zsh-completions
+        zsh-syntax-highlighting
+         )
+
+# Add paths 
+source $HOME/dotfiles/zsh/fpath.zsh
+
 autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# zsh-autocomplete set shift-tab to partial complete words
-bindkey '^[[Z' forward-word
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# Folders that we can `c [tab]` to
-# See functions/c
-export WORK=~/work
-export PERSONAL=~/me
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
 # Terminal Colouring
 zstyle :prompt:pure:path color cyan
+
+# User configuration
+# zsh-autocomplete set shift-tab to partial complete words
+bindkey '^[[Z' forward-word
