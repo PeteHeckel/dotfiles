@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 #
-# bootstrap installs things.
-
-# Get admin access to install the programs
-[ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
+# bootstrap installs things. See bottom for execution order
 
 cd "$(dirname "$0")"
 DOTFILES_ROOT=$(pwd -P)
@@ -134,7 +131,7 @@ link_file () {
 
 ## For every directory in the dotfile directory, link all .symlink config files to a folder
 ## in $HOME that has the same name with a leading period
-## eg. dotfiles/vscode/settings.json.symlink ---> ~/.vscode/settings.json 
+## eg. dotfiles/git/gitconfig.symlink ---> ~/.gitconfig
 install_dotfiles () {
   info 'Applying my dotfiles'
 
@@ -160,6 +157,9 @@ install_dotfiles () {
     link_file "$src" "$dst"
   done
 }
+
+# no admin cause that messes with the $HOME calls
+[ "$UID" -eq 0 ] && fail "Dont do this as root you fool"
 
 setup_gitconfig
 install_dotfiles
