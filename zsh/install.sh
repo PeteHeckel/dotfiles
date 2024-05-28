@@ -1,9 +1,8 @@
 #!/usr/bin/bash
 
 sudo apt install zsh -y
-sudo chsh -s $(which zsh)
+sudo chsh -s $(which zsh) $(whoami)
 
-## TODO: Figure out why this creates the oh-my-zsh dir in /root instead of /home/user/
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
 # Themes
