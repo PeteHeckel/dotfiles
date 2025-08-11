@@ -10,4 +10,55 @@
         excludesfile = ~/.gitignore
         editor = code --wait
 [help]
-        autocorrect = 1
+        autocorrect = prompt
+
+[column]
+	ui = auto 		# Make it so that long lists are spread out through the terminal
+[branch]
+	sort = -committerdate	# Sort the branches not alphabetically
+[tag]
+	sort = version:refname  # Sort tags in version format, not strict alphabetically
+[init]
+	defaultBranch = main
+[diff]
+	algorithm = histogram 	# Better diff algorithm than the default
+	colorMoved = plain	# Show moved lines in a different colour rather than just added & deleted lines 
+	mnemonicPrefix = true	# Use i/ (index) and w/ (working) instead of a/ and b/ in the diff header
+	renames = true		# Detect if files were renamed
+[push]
+	autoSetupRemote = true	# Remove the 'current branch has no upstream' error and just auto set the upstream on remote 
+	followTags = true 	# Auto push local tags
+
+[fetch]
+	prune = true		# If branches are deleted on the server, prune them locally
+	pruneTags = true
+	all = true		
+
+[commit]
+	verbose = true		# Add the full diff contents in comments when writing commit messages
+				# Note, it's not added to the commit message, it's just for reference
+
+[rerere]
+	enabled = true		# Reuse Recorded Resolutions will save rebase conflict resolution and apply them
+	autoupdate = true	# if it sees them again.
+
+[rebase]
+	updateRefs = true	# Takes stacked refs in a branch and ensures they're moved when branch is rebased
+
+[merge]
+	conflictStyle = zdiff3	# Adds in the original state when displaying merge conflicts
+
+[pull]
+	ff = only		# Only fast forward when pulling, I don't want to have a merge commit! >:(
+
+[alias]
+        s = status
+        del = branch -D
+        cob = checkout -b
+        aa = add .
+        last = log -1 HEAD --stat
+        cm = commit -m
+        cam = commit -am
+        patch = commit --amend --no-edit
+        slog = log --graph --pretty=format:'%C(auto)%h %C(red)%as %C(blue)%aN%C(auto)%d%C(green) %s'
+        aliases = config --get-regexp alias
