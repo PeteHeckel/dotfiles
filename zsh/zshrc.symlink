@@ -8,9 +8,13 @@ export ZSH="$HOME/.oh-my-zsh"
 export LOCAL_REPOS=$HOME/repos
 
 # Include local defined secrets file 
-source $HOME/.secrets
+if [[ -f $HOME/.secrets ]]; then
+    source $HOME/.secrets;
+fi
 
-for dir ("$HOME"/dotfiles/*) if [[ -d dir ]];then source dir/*.zsh; fi;
+for zsh_ext in $(find "$HOME/dotfiles/" -name "*.zsh"); do
+    source "$zsh_ext"
+done
 
 #Aliases
 # This was required to fixed a weird input error on xubuntu 20LTS
@@ -25,8 +29,6 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 HIST_STAMPS="dd.mm.yyyy"
-
-
 
 # Which plugins would you like to load?
 plugins=(
