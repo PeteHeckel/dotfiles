@@ -21,3 +21,8 @@ be linked to instead of ~/.topic
 
 Any files with `.local` in the name will be ignored by git. These can be used to 
 store local aliases, paths, environment variables, etc.
+
+## Future Ideas
+- Add in configuration differences between a WSL config and a pure linux config.
+- Add a local file that keeps track of which modules are installed in the current environment
+    - Add option to install select modules using shell scripts after the initial bootstrap has been done
