@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [[ $# -eq 0 ]]; then
+	# Search for hex files in the immediate directories
+    mapfile -t hex_files < <(find . -maxdepth 3 -type f -name "*.hex")
+    count=${#hex_files[@]} 
+    
+    if [[ $count -eq 1 ]]; then
+        FLASH_FILE="${hex_files[0]}"
+    elif [[ $count -ne 0 ]]; then
+        select opt in ${hex_files[@]}; do
+            FLASH_FILE=$opt
+            break
+        done
+    else
+        echo 'No hex files found' && exit 1
+    fi
+elif [[ ! -f $1 ]]; then
+	echo "Pass in a valid file to the script to flash" && exit 1
+else
+    FLASH_FILE=$1
+fi
+
+st-flash --reset --format ihex write "$FLASH_FILE"

@@ -1,0 +1,33 @@
+"Syntax Highlighting"
+syntax on
+
+"Line numbers"
+set number
+set relativenumber
+
+"Highlight searches incrementally as you search"
+set hlsearch
+set incsearch
+
+"Clear the highlights with CTRL+l"
+nnoremap <C-l> :noh<CR>
+
+"Use CTRL+R CTRL+R to paste the yank register in insert mode"
+inoremap <C-r><C-r> <C-r>0
+
+"Use S to swap word with yanked register"
+nnoremap S "_diwP
+vnoremap S "_dP
+
+"Backslash & h to substitute all occurrences of the word under the cursor
+" The \< and \> ensure only compete words are found (IE foo is replaced but not food) 
+:nnoremap <Leader>h :%s/\<<C-r><C-w>\>/
+
+"[Insert tabs vs spaces discourse here]
+filetype plugin indent on
+" show existing tab with 4 spaces width
+set tabstop=4
+" when indenting with '>', use 4 spaces width
+set shiftwidth=4
+" On pressing tab, insert 4 spaces
+set expandtab
