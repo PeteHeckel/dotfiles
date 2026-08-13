@@ -18,6 +18,12 @@
 # If not running interactively, don't do anything
 [[ "$-" != *i* ]] && return
 
+# Set the dotfiles env variables to the grand-parent directory of this script
+# This presumes the real-location is <dotfiles>/mingw-bash/<this_file>
+# realpath command resolves symlinks, which is necessary as this file gets symlinked
+# to the user's home directory
+export DOTFILES=$(dirname $(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")"))
+
 export PATH="$PATH:/c/Users/PeterHeckel/AppData/Local/Programs/Microsoft VS Code/bin"
 export PATH="$PATH:/opt/arm-gnu-toolchain-14.3.rel1/bin/"
 export PATH="$PATH:/c/Users/PeterHeckel/.local/bin/"
@@ -47,6 +53,9 @@ export MSYS=winsymlinks:nativestrict
 alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
+
+# Run the daily check to see if there are any configs that aren't checked in
+bash "$DOTFILES/system_check"
 
 # Shell Options
 #

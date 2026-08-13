@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Create a local file that stores the date for daily checks
+CHECK_FILE="${DOTFILES}/check_file.local"
+TODAY=$(date +%Y-%m-%d)
+
+# Check if the routine has been run today
+if [ ! -f "${CHECK_FILE}" ] || [ "$(cat "${CHECK_FILE}")" != "$TODAY" ]; then
+
+    # Log today's date so it only checks once
+    echo "$TODAY" > "$CHECK_FILE"
+    
+    file_diff="$(git -C "${DOTFILES}" status --porcelain)"
+    if [ -n "$file_diff" ]; then
+        echo "============================="
+        echo "Dotfile changes detected:"
+        echo "$file_diff"
+        echo "============================="
+    fi
+fi
+
