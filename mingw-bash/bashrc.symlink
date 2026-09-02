@@ -24,14 +24,14 @@
 # to the user's home directory
 export DOTFILES=$(dirname $(dirname -- "$(realpath -- "${BASH_SOURCE[0]}")"))
 
-export PATH="$PATH:/c/Users/PeterHeckel/AppData/Local/Programs/Microsoft VS Code/bin"
-export PATH="$PATH:/opt/arm-gnu-toolchain-14.3.rel1/bin/"
-export PATH="$PATH:/c/Users/PeterHeckel/.local/bin/"
-export PATH="$PATH:$HOME/tools/"
-export PATH="$PATH:$HOME/scripts/"
-export PATH="$PATH:/c/Program Files/Rowley Associates Limited/CrossWorks for ARM 4.10/bin/"
-export PATH="$PATH:/c/Program Files/SEGGER/JLink_V916/"
-export PATH="$PATH:/c/Program Files/WinMerge/"
+# If present, include the local file that expands on the PATH variable 
+DOTFILES_PATH_FILE="${DOTFILES}/path.local"
+[[ -e $DOTFILES_PATH_FILE ]] && source $DOTFILES_PATH_FILE
+
+# If present, include the local file that adds environment variables
+DOTFILES_ENV_VAR_FILE="${DOTFILES}/variables.local"
+[[ -e $DOTFILES_ENV_VAR_FILE ]] && source $DOTFILES_ENV_VAR_FILE
+
 
 # ST-util aliases
 alias sflash="st-flash --reset --format ihex write"

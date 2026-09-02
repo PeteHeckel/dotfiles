@@ -22,6 +22,10 @@ be linked to instead of ~/.topic
 Any files with `.local` in the name will be ignored by git. These can be used to 
 store local aliases, paths, environment variables, etc.
 
+**By default**, `secrets.local`, `path.local` and `variables.local` are sourced by 
+the startup file and are intended to house paths to be included on the PATH and 
+environment variables to set for every session.
+
 ## Future Ideas
 - Add in configuration differences between a WSL config and a pure linux config.
 - Add a local file that keeps track of which modules are installed in the current environment

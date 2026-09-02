@@ -7,10 +7,16 @@ export ZSH="$HOME/.oh-my-zsh"
 # Define project folder so we can `c [tab]` to it
 export LOCAL_REPOS=$HOME/repos
 
-# Include local defined secrets file 
-if [[ -f $HOME/.secrets ]]; then
-    source $HOME/.secrets;
-fi
+# Define the dotfiles location as the grandparent directory of this script,
+# as it is presumed this file is located under <dotfiles>/zsh/.zshrc
+# 'realpath' is used to resolve symlinks to get the actual script location
+export DOTFILES=$(dirname $(dirname -- "$(realpath -- "${ZSH_SOURCE[0]}")"))
+
+# Include local files
+[[ -f $DOTFILES/secrets.local ]] && source $DOTFILES/secrets.local
+[[ -f $DOTFILES/path.local ]] && source $DOTFILES/path.local
+[[ -f $DOTFILES/variables.local ]] && source $DOTFILES/variables.local
+
 
 for zsh_ext in $(find "$HOME/dotfiles/" -name "*.zsh"); do
     source "$zsh_ext"
