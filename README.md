@@ -7,6 +7,8 @@ First off on a clean system you can run the **`install`** script.
 It will run through each directory looking for an install.sh script
 which will install necessary dependencies for each application.
 
+**TODO**: Update this to work with mingw-bash
+
 ## `bootstrap`
 The bootstrap script will configure git, then it will go through each
 directory and symlink all files ending with `.symlink` in a directory
@@ -27,6 +29,7 @@ the startup file and are intended to house paths to be included on the PATH and
 environment variables to set for every session.
 
 ## Future Ideas
+- Add auto package install
 - Add in configuration differences between a WSL config and a pure linux config.
 - Add a local file that keeps track of which modules are installed in the current environment
     - Add option to install select modules using shell scripts after the initial bootstrap has been done

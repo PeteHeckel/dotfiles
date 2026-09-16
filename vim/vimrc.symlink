@@ -19,9 +19,9 @@ inoremap <C-r><C-r> <C-r>0
 nnoremap S "_diwP
 vnoremap S "_dP
 
-"Backslash & h to substitute all occurrences of the word under the cursor
+"Backslash & g to substitute all occurrences of the word under the cursor
 " The \< and \> ensure only compete words are found (IE foo is replaced but not food) 
-:nnoremap <Leader>h :%s/\<<C-r><C-w>\>/
+nnoremap <Leader>g :%s/\<<C-r><C-w>\>/
 
 "[Insert tabs vs spaces discourse here]
 filetype plugin indent on
