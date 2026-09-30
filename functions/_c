@@ -1,4 +1,26 @@
 #compdef c
-_files -W $LOCAL_REPOS -/
 
+# Note the `#compdef c` is a ZSH directive for when this file is loaded into fpath.
+# It associates this script with the `c` script as its autocomplete script, so that
+# when we call _files, it properly associates those files with the `c` script.
+
+if [[ -v $ZSH ]]; then	# ZSH version
+
+	# Add directories (`-/` filter) in $LOCAL_REPOS (-W specifies working directory)
+	# to file completion list (_files) 
+	_files -W $LOCAL_REPOS -/
+
+else	# Bash version
+	
+	# define the function (In bash we need to define the function so that when we source
+    # this script on startup, the function is available in the shell. ZSH we can just
+    # add the script as a function without cluttering the PATH)
+	c() {
+		cd $LOCAL_REPOS/$1
+	}
+
+	# Add directorynames (-o dirnames) to completion script c (complete ... c), 
+	# with completions words (-W) from directories in $LOCAL_REPOS
+	complete -o dirnames -W "$(ls -d $LOCAL_REPOS/* | xargs -n1 basename)" c
+fi
 # See further documentation in `functions/c`.

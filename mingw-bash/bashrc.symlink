@@ -56,6 +56,14 @@ alias ll='ls -l'                              # long list
 alias la='ls -A'                              # all but . and ..
 alias l='ls -CF'                              #
 
+# Source all function scripts with an underscore 
+# ( these are the setup files for the actual function scripts )
+for func_script in $DOTFILES/functions/_*; do
+    if [ -f $func_script ]; then
+        source $func_script
+    fi
+done
+
 # Run the daily check to see if there are any configs that aren't checked in
 bash "$DOTFILES/system_check"
 

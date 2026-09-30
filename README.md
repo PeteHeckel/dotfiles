@@ -28,6 +28,36 @@ store local aliases, paths, environment variables, etc.
 the startup file and are intended to house paths to be included on the PATH and 
 environment variables to set for every session.
 
+## Functions
+
+Generic shell utility functions are stored in the `functions` directory, and
+the way that they are loaded differs depending on the shell being used.
+
+### ZSH 
+
+ZSH uses its `fpath` and `autoload` directives to load scripts as functions.
+ZSH convention is that a function's completion script is named as the function
+with a leading underscore. 
+
+On startup, all scripts in the functions directory
+is added to the `fpath`, and the `_*` scripts have the `#compdef <func>` directive
+on the first line to tell zsh that this script should be associated with `<func>`
+for completion directives (`_arguments` or `_files`, etc).
+
+### Bash
+
+With bash, we don't have an option to load files as shell functions without adding
+the directory to our PATH, and we wish to avoid that. So to get around this, we
+use the `_*` files as setup files that define the function and adds completion options.
+All the underscore files are then sourced on startup so the function are available.
+
+Within the underscore files, there must be conditional logic so that the bash
+and ZSH differences are appropriately handled when each shell interacts with the script.
+This is usually handled with a `[[ -v $ZSH ]]` conditional. Bash will ignore the
+`#compdef ...` directive at the start of the file as a comment, which is very
+convenient for us.
+
+
 ## Future Ideas
 - Add auto package install
 - Add in configuration differences between a WSL config and a pure linux config.
